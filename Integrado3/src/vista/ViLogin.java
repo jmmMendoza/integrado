@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 
 import modelo.MoLogin;
 
-public class ViLogin extends JFrame{
+public class ViLogin extends JFrame {
 	private MoLogin modelo = new MoLogin();
-	private JButton boton;
+	private ArrayList<JButton> botones = new ArrayList<>();
 	private ArrayList<JLabel> textos = new ArrayList<>();
 	private ArrayList<JPanel> paneles = new ArrayList<>();
 	private JTextField nick;
@@ -33,14 +33,15 @@ public class ViLogin extends JFrame{
 	private void propiedadesVentana() {
 		setLayout(new FlowLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		//setTitle(modelo.getTitulo());
+		setLocationRelativeTo(null);
+		// setTitle(modelo.getTitulo());
 		setVisible(true);
 		ajustarVentana();
 	}
 
 	private void ajustarVentana() {
 		pack();
-		
+
 	}
 
 	private void panelTitulo() {
@@ -63,11 +64,18 @@ public class ViLogin extends JFrame{
 		password = new JPasswordField(20);
 		panPassword.add(password);
 		vert.add(panPassword);
-		boton = new JButton(modelo.getTextos(0));
-		vert.add(boton);
+		crearBotones(vert);
 		panel.add(vert);
 		paneles.add(panel);
 	}
+
+	private void crearBotones(Box vert) {
+		for (int i=0; i<modelo.gettexBotones().length; i++) {
+			botones.add(new JButton(modelo.gettexBotones(i)));
+			vert.add(botones.get(i));
+		}
+	}
+
 	public void mostrarDialogoLogin(String mensaje) {
 		JOptionPane.showMessageDialog(this, mensaje);
 
@@ -78,14 +86,6 @@ public class ViLogin extends JFrame{
 			vertical.add(panel);
 		}
 		add(vertical);
-	}
-
-	public JButton getBoton() {
-		return boton;
-	}
-
-	public void setBoton(JButton boton) {
-		this.boton = boton;
 	}
 
 	public JTextField getNick() {
@@ -106,6 +106,14 @@ public class ViLogin extends JFrame{
 
 	public String getPasswordText() {
 		return password.getText();
+	}
+	
+	public ArrayList<JButton> getBotones() {
+		return botones;
+	}
+
+	public void setBotones(ArrayList<JButton> botones) {
+		this.botones = botones;
 	}
 
 	public void setPassword(JPasswordField password) {

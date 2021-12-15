@@ -1,6 +1,5 @@
 package controlador;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -22,35 +21,38 @@ public class EventosLogin implements ActionListener {
 		this.conexion = conexion;
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String sql = crearSQL();
-		// Se busca si el usuario y contraseña introducidos existen
-		conexion.crearConsulta(sql, conexion.getState(0));
-		int indice = conexion.getRs().size() - 1;
-		rs = conexion.getRs(conexion.getRs().size() - 1);
-		try {
-			// Si se encuentra al usuario
-			if (rs.next()) {
-				vista.mostrarDialogoLogin("Has iniciado sesion como " + rs.getString(2) + " "+ rs.getString(3)
-						+ ", actualmente tienes el rol de " + rs.getString(6) + ".");
-				// Se crea el menu
+		if (e.getSource().equals(vista.getBotones().get(0))) {
+			String sql = crearSQL();
+			// Se busca si el usuario y contraseña introducidos existen
+			conexion.crearConsulta(sql, conexion.getState(0));
+			int indice = conexion.getRs().size() - 1;
+			rs = conexion.getRs(conexion.getRs().size() - 1);
+			try {
+				// Si se encuentra al usuario
+				if (rs.next()) {
+					vista.mostrarDialogoLogin("Has iniciado sesion como " + rs.getString(2) + " " + rs.getString(3)
+							+ ", actualmente tienes el rol de " + rs.getString(6) + ".");
+					// Se crea el menu
 
-			} else {
-				JOptionPane.showMessageDialog(null, "Cuenta incorrecta");
+				} else {
+					JOptionPane.showMessageDialog(null, "Cuenta incorrecta");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+			conexion.removeRs(indice);
+			//Añadido por Jorge
+		} else if (e.getSource().equals(vista.getBotones().get(1))) {
+			new CoRegistro(conexion);
+			System.out.println("Ventana Nueva");
 		}
-		conexion.removeRs(indice);
 	}
 
 	private String crearSQL() {
-		String sql = "SELECT * FROM USUARIOS WHERE UPPER(CORREO) = '"
-				+ vista.getNickText().trim().toUpperCase() + "' AND PASSWORD = '"
-				+ vista.getPasswordText() + "'";
+		String sql = "SELECT * FROM USUARIOS WHERE UPPER(CORREO) = '" + vista.getNickText().trim().toUpperCase()
+				+ "' AND PASSWORD = '" + vista.getPasswordText() + "'";
 		return sql;
 	}
-
 }

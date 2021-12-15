@@ -1,5 +1,7 @@
 package controlador;
 
+import javax.swing.JButton;
+
 import conexion.Conexion;
 import vista.ViLogin;
 
@@ -16,7 +18,10 @@ public class CoLogin {
 
 	// Metodo para activar los eventos del boton de login
 	private void activarEventos() {
-		vista.getBoton().addActionListener(new EventosLogin(vista, conexion));
+		//Cambiado por Jorge a un array de botones
+		for (JButton boton : vista.getBotones()) {
+			boton.addActionListener(new EventosLogin(vista, conexion));
+		}
 	}
 
 }
