@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PruebaIntegrado</string>
+    <string name="prueba">test</string>
+    <string name="correo">E-mail</string>
+    <string name="contrasena">Password</string>
+</resources>

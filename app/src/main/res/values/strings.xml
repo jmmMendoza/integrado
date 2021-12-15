@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">PruebaIntegrado</string>
+    <string name="prueba">Prueba</string>
+    <string name="correo">Correo</string>
+    <string name="contrasena">Contraseña</string>
+</resources>
