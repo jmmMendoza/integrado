@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/fondo">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,10 +21,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="151dp"
-                android:layout_height="113dp"
+                android:layout_width="360dp"
+                android:layout_height="80dp"
                 android:layout_marginBottom="40dp"
-                app:srcCompat="@drawable/developeru" />
+                app:srcCompat="@drawable/logotipo" />
 
             <EditText
                 android:id="@+id/edtUsuario"

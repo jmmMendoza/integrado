@@ -17,6 +17,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         edtUsuario = findViewById(R.id.edtUsuario);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -42,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     validarUsuario("http://172.20.10.6/developeru/validar_usuario.php");
                     //btnLogin.setText(getDeviceIpAddress());
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/developeru_bd", "root", "");
+                        Statement state = conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                        ResultSet rs = state.executeQuery("SELECT * FROM usuario");
+                        rs.next();
+                        System.out.println(rs.getString(1));
+                    } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                 }
