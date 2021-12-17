@@ -7,8 +7,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ardor/Desktop/ACDA1EVA/librerias/mysql-connector-java-8.0.26.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ardor/Desktop/ACDA1EVA/librerias/java-mail-1.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ardor/Desktop/DAM/integrado/Integrado3/libs/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hp/Downloads/java-mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hp/Downloads/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hp/Downloads/mysql-connector-java-8.0.26.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

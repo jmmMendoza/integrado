@@ -1,5 +1,5 @@
 package controlador;
 
-public class CoCorreo {
+public class CoBandeja {
 
 }

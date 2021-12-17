@@ -1,6 +1,8 @@
 package pruebaCorreo;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -16,12 +18,17 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import vista.ViBandeja;
 
 public class LeerCorreo {
+	private static ViBandeja vista = new ViBandeja();
+//	private String[] columnas;
+	;
 
 	public static void main(String[] args) {
 		String remitente = "integradogrupo3@gmail.com";
 		String password = "#Integradogrupo3";
+		ArrayList<String> filas = new ArrayList<>();
 
 		Properties propiedades = new Properties();
 //		propiedades.setProperty("mail.pop3.starttls.enable", "false");
@@ -50,13 +57,24 @@ public class LeerCorreo {
 				store.connect("pop.gmail.com", remitente, password);
 				Folder folder = store.getFolder("INBOX");
 				folder.open(Folder.READ_ONLY);
-
 				Message[] mensajes = folder.getMessages();
 
 				for (int i = 0; i < mensajes.length; i++) {
 					System.out.println("From:" + mensajes[i].getFrom()[0].toString());
 					System.out.println("Subject:" + mensajes[i].getSubject());
+					filas.add("De:" + mensajes[i].getFrom()[0].toString() + " " + "Asunto:" + mensajes[i].getSubject());
 				}
+				String[] columnas = new String[] { "Correo electrónico" };
+				String[][] datos = new String[mensajes.length][1];
+				for (int i = 0; i < filas.size(); i++) {
+					for (int j = 0; j < columnas.length; j++) {
+						System.out.println(filas.get(i));
+						System.out.println(i + "," + j);
+						datos[i][j] = filas.get(filas.size()-i-1);
+					}
+				}
+				vista.crearJTable(columnas, datos);
+
 				for (int i = 0; i < mensajes.length; i++) {
 					if (mensajes[i].isMimeType("text/*")) {
 						// mensaje de texto simple
