@@ -45,6 +45,7 @@ public class EventosRegistro implements ActionListener, KeyListener {
 		else if (e.getSource().equals(vista.getCampos().get(1))) {
 			int limite = 25;
 			if (vista.getCampos().get(1).getText().length() == limite) {
+				
 				e.consume();
 			}
 		}

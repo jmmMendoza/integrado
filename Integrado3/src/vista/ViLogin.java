@@ -20,7 +20,6 @@ public class ViLogin extends JFrame {
 	private ArrayList<JLabel> textos = new ArrayList<>();
 	private ArrayList<JPanel> paneles = new ArrayList<>();
 	private JTextField nick;
-	private JPasswordField password;
 	private Box vertical = Box.createVerticalBox();
 
 	public ViLogin() {
@@ -31,7 +30,7 @@ public class ViLogin extends JFrame {
 	}
 
 	private void propiedadesVentana() {
-		setLayout(new FlowLayout());
+		getContentPane().setLayout(new FlowLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		// setTitle(modelo.getTitulo());
@@ -53,17 +52,7 @@ public class ViLogin extends JFrame {
 	private void panelLogin() {
 		JPanel panel = new JPanel(new FlowLayout());
 		Box vert = Box.createVerticalBox();
-		// Se crea el panel de usuario
-		LTexto nombre = new LTexto(modelo.getTextos(2));
-		vert.add(nombre);
-		nick = nombre.getCampo();
-		// Se crea el panel del password
-		JPanel panPassword = new JPanel(new FlowLayout());
 		textos.add(new JLabel(modelo.getTextos(3)));
-		panPassword.add(textos.get(textos.size() - 1));
-		password = new JPasswordField(20);
-		panPassword.add(password);
-		vert.add(panPassword);
 		crearBotones(vert);
 		panel.add(vert);
 		paneles.add(panel);
@@ -85,7 +74,7 @@ public class ViLogin extends JFrame {
 		for (JPanel panel : paneles) {
 			vertical.add(panel);
 		}
-		add(vertical);
+		getContentPane().add(vertical);
 	}
 
 	public JTextField getNick() {
