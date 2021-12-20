@@ -1,9 +1,11 @@
 package controlador;
 
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import conexion.Conexion;
+import vista.ViLogin;
 import vista.ViRegistro;
 /**
  * 
@@ -19,10 +21,12 @@ import vista.ViRegistro;
 public class CoRegistro {
 	private Conexion conexion;
 	private ViRegistro vista;
+	private ViLogin vistaLogin;
 
-	public CoRegistro(Conexion conexion) {
+	public CoRegistro(Conexion conexion, ViLogin vistaLogin) {
 		this.conexion = conexion;
 		this.vista = new ViRegistro(conexion);
+		this.vistaLogin = vistaLogin;
 		// Se activan los eventos del boton de login
 		activarEventos();
 	}
@@ -31,10 +35,12 @@ public class CoRegistro {
 	private void activarEventos() {
 		System.out.println(vista.getCampos().size());
 		for (JTextField campo : vista.getCampos()) {
-			campo.addKeyListener(new EventosRegistro(vista, conexion));
+			campo.addKeyListener(new EventosRegistro(vista, conexion, vistaLogin));
 		}
-		vista.getBoton().addActionListener(new EventosRegistro(vista, conexion));
-		vista.getPassword().addKeyListener(new EventosRegistro(vista, conexion));
+		for (JPasswordField contra : vista.getContra()) {
+			contra.addKeyListener(new EventosRegistro(vista, conexion, vistaLogin));
+		}
+		vista.getBtnRegistrar().addActionListener(new EventosRegistro(vista, conexion, vistaLogin));
 	}
 
 }

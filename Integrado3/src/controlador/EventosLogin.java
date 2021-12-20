@@ -45,14 +45,15 @@ public class EventosLogin implements ActionListener {
 			conexion.removeRs(indice);
 			//Añadido por Jorge
 		} else if (e.getSource().equals(vista.getBotones().get(1))) {
-			new CoRegistro(conexion);
+			vista.setVisible(false);
+			new CoRegistro(conexion, vista);
 			System.out.println("Ventana Nueva");
 		}
 	}
 
 	private String crearSQL() {
-		String sql = "SELECT * FROM USUARIOS WHERE UPPER(CORREO) = '" + vista.getNickText().trim().toUpperCase()
-				+ "' AND PASSWORD = '" + vista.getPasswordText() + "'";
+		String sql = "SELECT * FROM USUARIOS WHERE UPPER(CORREO) = '" + vista.getTxtCorreo().getText().trim().toUpperCase()
+				+ "' AND PASSWORD = '" + vista.getPasswordFieldContra().getText() + "'";
 		return sql;
 	}
 }

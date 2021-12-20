@@ -1,7 +1,6 @@
 package controlador;
 
 import conexion.Conexion;
-import vista.ViLogin;
 
 public class prueba {
 

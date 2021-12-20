@@ -1,4 +1,5 @@
 package controlador;
+
 /**
  * 
  * @author Jorge Martos Mendoza
@@ -14,23 +15,55 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
 
 import conexion.Conexion;
+import vista.ViLogin;
 import vista.ViRegistro;
 
 public class EventosRegistro implements ActionListener, KeyListener {
 	private Conexion conexion;
 	private ViRegistro vista;
+	private ViLogin vistaLogin;
 
-	public EventosRegistro(ViRegistro vista, Conexion conexion) {
+	public EventosRegistro(ViRegistro vista, Conexion conexion, ViLogin vistaLogin) {
 		this.vista = vista;
 		this.conexion = conexion;
+		this.vistaLogin = vistaLogin;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("boton pulsao");
+		String sql = crearSQL();
+		if (vista.getTxtNif().getText().trim().length() != 0 && vista.getTxtNombre().getText().trim().length() != 0
+				&& vista.getTxtApellidos().getText().trim().length() != 0
+				&& vista.getTxtCorreo().getText().trim().length() != 0
+				&& vista.getPasswordFieldContra().getText().trim().length() != 0
+				&& vista.getPasswordFieldConfirmar().getText().trim().length() != 0) {
+			System.out.println("dsfssvzxxv");
+			System.out.println(vista.getTxtNif().getText().length());
+			if (vista.getPasswordFieldContra().getText().equals(vista.getPasswordFieldConfirmar().getText())) {
+				vista.mostrarDialogoRegistro("boton pulsao");
+				System.out.println(sql);
 
+				if(conexion.modificarBADA(conexion.getState(conexion.getState().size()-1), sql)) {
+					vista.mostrarDialogoRegistro("Registro completado");
+					
+					vista.dispose();
+					vistaLogin.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "No se puede repetir el NIF");
+				}
+				
+				
+			} else {
+				vista.mostrarDialogoRegistro("Las contraseñas no son iguales");
+			}
+		} else {
+			vista.mostrarDialogoRegistro("No puede haber campos vacíos");
+		}
 	}
 
 	@Override
@@ -41,35 +74,41 @@ public class EventosRegistro implements ActionListener, KeyListener {
 				e.consume();
 			}
 		}
-		
+
 		else if (e.getSource().equals(vista.getCampos().get(1))) {
 			int limite = 25;
 			if (vista.getCampos().get(1).getText().length() == limite) {
 				e.consume();
 			}
 		}
-		
+
 		else if (e.getSource().equals(vista.getCampos().get(2))) {
 			int limite = 40;
 			if (vista.getCampos().get(2).getText().length() == limite) {
 				e.consume();
 			}
 		}
-		
+
 		else if (e.getSource().equals(vista.getCampos().get(3))) {
 			int limite = 50;
 			if (vista.getCampos().get(3).getText().length() == limite) {
 				e.consume();
 			}
 		}
-		
-		else if (e.getSource().equals(vista.getPassword())) {
+
+		else if (e.getSource().equals(vista.getContra().get(0))) {
 			int limite = 20;
-			if (vista.getPassword().getText().length() == limite) {
+			if (vista.getContra().get(0).getText().length() == limite) {
 				e.consume();
 			}
 		}
-		
+
+		else if (e.getSource().equals(vista.getContra().get(1))) {
+			int limite = 20;
+			if (vista.getContra().get(1).getText().length() == limite) {
+				e.consume();
+			}
+		}
 	}
 
 	@Override
@@ -84,4 +123,11 @@ public class EventosRegistro implements ActionListener, KeyListener {
 
 	}
 
+	private String crearSQL() {
+		String sql = "INSERT INTO USUARIOS  VALUES ('" + vista.getTxtNif().getText() + "', '"
+				+ vista.getTxtNombre().getText() + "', '" + vista.getTxtApellidos().getText() + "', '"
+				+ vista.getTxtCorreo().getText() + "', '" + vista.getPasswordFieldContra().getText() + "', '"
+				+ vista.getComboBox().getSelectedItem() + "')";
+		return sql;
+	}
 }

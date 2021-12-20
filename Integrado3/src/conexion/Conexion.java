@@ -32,6 +32,7 @@ public class Conexion {
 			try {
 				// Se crea la conexion
 				conexion = DriverManager.getConnection(modelo.getIp(), modelo.getUsuario(), modelo.getPassword());
+				crearStatement();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -70,7 +71,7 @@ public class Conexion {
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			 //e.printStackTrace();
 			return false;
 		}
 	}

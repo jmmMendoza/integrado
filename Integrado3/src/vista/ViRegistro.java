@@ -1,136 +1,204 @@
 package vista;
-/**
- * 
- * @author Jorge Martos Mendoza
- * 
- *         Fecha: 15/12/2021
- * 
- *         Trabajo: Proyecto Integrado Seguridad Social Grupo 3
- * 
- *         Clase con la vista sobre el proceso de registro
- *
- */
-import java.awt.FlowLayout;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
+import javax.swing.border.EmptyBorder;
 
 import conexion.Conexion;
-import modelo.MoRegistro;
 
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+/**
+ * Proyecto Integrado Seguridad Social Grupo 3
+ * @author Juan Carlos Gil Gil
+ * Herramienta utilizada: Window Builder
+ * Fecha: 17/12/2021
+ */
 public class ViRegistro extends JFrame {
-	private MoRegistro modelo = new MoRegistro();
-	private Conexion conexion;
-	private JButton boton;
-	private ArrayList<JLabel> textos = new ArrayList<>();
-	private ArrayList<JPanel> paneles = new ArrayList<>();
-	private ArrayList<JTextField> campos = new ArrayList<>();
-	private JPasswordField password;
-	private Box vertical = Box.createVerticalBox();
-	private JComboBox combo;
-	private ResultSet rs;
 
+	private Conexion conexion;
+	private JPanel contentPane;
+	private JTextField txtNif;
+	private JTextField txtNombre;
+	private JTextField txtCorreo;
+	private JTextField txtApellidos;
+	private JButton btnRegistrar;
+	private JPasswordField passwordFieldContra;
+	private JPasswordField passwordFieldConfirmar;
+	private ArrayList<JTextField> campos = new ArrayList<>();
+	private ArrayList<JPasswordField> contra = new ArrayList<>();
+	private ResultSet rs;
+	private JComboBox comboBox;
+
+	/**
+	 * Launch the application.
+	 */
+
+	/**
+	 * Create the frame.
+	 * @param conexion 
+	 */
 	public ViRegistro(Conexion conexion) {
 		this.conexion = conexion;
-		panelTitulo();
-		panelLogin();
-		addPaneles();
-		propiedadesVentana();
-	}
-
-	private void propiedadesVentana() {
-		setLayout(new FlowLayout());
+		setTitle("Registro Seguridad Social");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		// setTitle(modelo.getTitulo());
-		setVisible(true);
-		ajustarVentana();
-	}
-
-	private void ajustarVentana() {
-		pack();
-
-	}
-
-	private void panelTitulo() {
-		paneles.add(new JPanel(new FlowLayout()));
-		textos.add(new JLabel(modelo.getPantalla(0)));
-		paneles.get(paneles.size() - 1).add(textos.get(textos.size() - 1));
-	}
-
-	private void panelLogin() {
-		JPanel panel = new JPanel(new FlowLayout());
-		Box vert = Box.createVerticalBox();
-		// Se crean los paneles
-		crearPaneles(vert);
-		// Se crea el panel del password
-		JPanel panPassword = new JPanel(new FlowLayout());
-		textos.add(new JLabel(modelo.getTextos(5)));
-		panPassword.add(textos.get(textos.size() - 1));
-		password = new JPasswordField(20);
-		panPassword.add(password);
-		vert.add(panPassword);
-		rellenarCombo(vert);
-		boton = new JButton(modelo.getPantalla(1));
-		vert.add(boton);
-		panel.add(vert);
-		paneles.add(panel);
-	}
-
-	private void rellenarCombo(Box vert) {
-		combo = new JComboBox();
-		vert.add(combo);
-		String sql = crearSQL();
+		setBounds(100, 100, 960, 560);
+		setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/fondo_seguridad.png")));
+		lblNewLabel.setBounds(10, 10, 926, 503);
+		ImageIcon ico = new ImageIcon(getClass().getResource("/fondo_seguridad.png"));
+	    Image image = (ico).getImage().getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
+	    ico = new ImageIcon(image);
+	    
+	    JPanel panel = new JPanel();
+	    panel.setOpaque(false);
+	    panel.setBounds(228, 142, 205, 190);
+	    contentPane.add(panel);
+	    
+	    JLabel lblNif = new JLabel("NIF");
+	    lblNif.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    lblNif.setHorizontalAlignment(SwingConstants.CENTER);
+	    panel.add(lblNif);
+	    
+	    txtNif = new JTextField();
+	    campos.add(txtNif);
+	    panel.add(txtNif);
+	    txtNif.setColumns(20);
+	    
+	    JLabel lblNombre = new JLabel("Nombre");
+	    lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    panel.add(lblNombre);
+	    
+	    txtNombre = new JTextField();
+	    campos.add(txtNombre);
+	    panel.add(txtNombre);
+	    txtNombre.setColumns(20);
+	    
+	    JLabel lblApellidos = new JLabel("Apellidos");
+	    lblApellidos.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    panel.add(lblApellidos);
+	    
+	    txtApellidos = new JTextField();
+	    campos.add(txtApellidos);
+	    txtApellidos.setColumns(20);
+	    panel.add(txtApellidos);
+	    
+	    JLabel lblRol = new JLabel("ROL");
+	    panel.add(lblRol);
+	    
+	    comboBox = new JComboBox();
+	    String sql = crearSQL();
 		conexion.crearConsulta(sql, conexion.getState(0));
 		int indice = conexion.getRs().size() - 1;
 		rs = conexion.getRs(conexion.getRs().size() - 1);
 		try {
 			while (rs.next()) {
-				combo.addItem(rs.getString(1));
+				comboBox.addItem(rs.getString(1));
 			}
 
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-
+	    panel.add(comboBox);
+	    
+	    JPanel panel_1 = new JPanel();
+	    panel_1.setOpaque(false);
+	    panel_1.setBounds(476, 142, 205, 190);
+	    contentPane.add(panel_1);
+	    
+	    JLabel lblCorreo = new JLabel("Correo");
+	    lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblCorreo.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    panel_1.add(lblCorreo);
+	    
+	    txtCorreo = new JTextField();
+	    campos.add(txtCorreo);
+	    txtCorreo.setColumns(20);
+	    panel_1.add(txtCorreo);
+	    
+	    JLabel lblContra = new JLabel("Contrase\u00F1a");
+	    lblContra.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    panel_1.add(lblContra);
+	    
+	    passwordFieldContra = new JPasswordField();
+	    passwordFieldContra.setEchoChar('*');
+	    passwordFieldContra.setColumns(20);
+	    contra.add(passwordFieldContra);
+	    panel_1.add(passwordFieldContra);
+	    
+	    JLabel lblConfirmar = new JLabel("Confirmar contrase\u00F1a");
+	    lblConfirmar.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    panel_1.add(lblConfirmar);
+	    
+	    passwordFieldConfirmar = new JPasswordField();
+	    passwordFieldConfirmar.setEchoChar('*');
+	    contra.add(passwordFieldConfirmar);
+	    passwordFieldConfirmar.setColumns(20);
+	    panel_1.add(passwordFieldConfirmar);
+	    
+	    JCheckBox chckbxMostrar = new JCheckBox("Mostrar Contrase\u00F1a");
+	    chckbxMostrar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		if(chckbxMostrar.isSelected()) {
+	    			passwordFieldContra.setEchoChar((char)0);
+	    			passwordFieldConfirmar.setEchoChar((char)0);
+	    		}else {
+	    			passwordFieldContra.setEchoChar('*');
+	    			passwordFieldConfirmar.setEchoChar('*');
+	    		}
+	    	}
+	    });
+	    panel_1.add(chckbxMostrar);
+	    
+	    btnRegistrar = new JButton("Registrarse");
+	    btnRegistrar.setBackground(Color.BLACK);
+	    btnRegistrar.setForeground(Color.WHITE);
+	    panel_1.add(btnRegistrar);
+	    lblNewLabel.setIcon(ico);
+		contentPane.add(lblNewLabel);
+		setVisible(true);
 	}
-
-	private void crearPaneles(Box vert) {
-		for (int i = 0; i < modelo.getTextos().length - 2; i++) {
-			LTexto campo = new LTexto(modelo.getTextos(i));
-			vert.add(campo);
-			campos.add(campo.getCampo());
-		}
-
-	}
-
-	public void mostrarDialogoLogin(String mensaje) {
+	public void mostrarDialogoRegistro(String mensaje) {
 		JOptionPane.showMessageDialog(this, mensaje);
 
 	}
-
-	private void addPaneles() {
-		for (JPanel panel : paneles) {
-			vertical.add(panel);
-		}
-		add(vertical);
+	private String crearSQL() {
+		String sql = "SELECT ROL FROM PRIVILEGIOS";
+		return sql;
+	}
+	
+	// GETTERS & SETTERS
+	public JButton getBtnRegistrar() {
+		return btnRegistrar;
 	}
 
-	public JButton getBoton() {
-		return boton;
-	}
-
-	public void setBoton(JButton boton) {
-		this.boton = boton;
+	public void setBtnRegistrar(JButton btnRegistrar) {
+		this.btnRegistrar = btnRegistrar;
 	}
 
 	public ArrayList<JTextField> getCampos() {
@@ -141,20 +209,59 @@ public class ViRegistro extends JFrame {
 		this.campos = campos;
 	}
 
-	public JPasswordField getPassword() {
-		return password;
+	public ArrayList<JPasswordField> getContra() {
+		return contra;
 	}
 
-	public String getPasswordText() {
-		return password.getText();
+	public void setContra(ArrayList<JPasswordField> contra) {
+		this.contra = contra;
 	}
-
-	public void setPassword(JPasswordField password) {
-		this.password = password;
+	public JTextField getTxtNif() {
+		return txtNif;
 	}
-
-	private String crearSQL() {
-		String sql = "SELECT ROL FROM PRIVILEGIOS";
-		return sql;
+	public void setTxtNif(JTextField txtNif) {
+		this.txtNif = txtNif;
+	}
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+	public void setTxtNombre(JTextField txtNombre) {
+		this.txtNombre = txtNombre;
+	}
+	public JTextField getTxtCorreo() {
+		return txtCorreo;
+	}
+	public void setTxtCorreo(JTextField txtCorreo) {
+		this.txtCorreo = txtCorreo;
+	}
+	public JTextField getTxtApellidos() {
+		return txtApellidos;
+	}
+	public void setTxtApellidos(JTextField txtApellidos) {
+		this.txtApellidos = txtApellidos;
+	}
+	public JPasswordField getPasswordFieldContra() {
+		return passwordFieldContra;
+	}
+	public void setPasswordFieldContra(JPasswordField passwordFieldContra) {
+		this.passwordFieldContra = passwordFieldContra;
+	}
+	public JPasswordField getPasswordFieldConfirmar() {
+		return passwordFieldConfirmar;
+	}
+	public void setPasswordFieldConfirmar(JPasswordField passwordFieldConfirmar) {
+		this.passwordFieldConfirmar = passwordFieldConfirmar;
+	}
+	public ResultSet getRs() {
+		return rs;
+	}
+	public void setRs(ResultSet rs) {
+		this.rs = rs;
+	}
+	public JComboBox getComboBox() {
+		return comboBox;
+	}
+	public void setComboBox(JComboBox comboBox) {
+		this.comboBox = comboBox;
 	}
 }
