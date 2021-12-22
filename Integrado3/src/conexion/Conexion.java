@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import modelo.MoConexion;
+
+import FTP.modelo.MoConexion;
 
 /**
  * 
